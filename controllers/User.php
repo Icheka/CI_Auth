@@ -34,7 +34,7 @@ class User extends CI_Controller {
         
         if ($this->check_params($params, $data, true) == true) {
             // can continue with creating user as params are correct
-            $data['pass'] = $data['password']; // To enable easy insertion in SQL-based DBs
+            $data['pass'] = password_hash($data['password'], PASSWORD_BCRYPT); // To enable easy insertion in SQL-based DBs
             unset($data['password']);
         
             if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) == true) {
