@@ -82,7 +82,7 @@ class User extends CI_Controller {
             );
         if ($this->check_params($params, $data, true) == true) {
             // passed params check. Can continue.
-            $user = $this->admin_model->fetchUser($data['email'], 'email');
+            $user = $this->user_model->fetchUser($data['email'], 'email');
             
             if (count($user) == 0) {
                 // user does not exist.
@@ -90,11 +90,12 @@ class User extends CI_Controller {
                 
             } else {
                 // user does exist.
-                if (password_verify($data['password'], $user['pass']) == true) {
+                
+                if (password_verify($data['password'], $user[0]['pass']) == true) {
                     // passwords match!
                     // fetch user details and return.
                     // set user_id to session
-                    $this->session->set_userdata('user_id', $user['user_id']);
+                    $this->session->set_userdata('user_id', $user[0]['user_id']);
                     
                     $this->echo_success('Success', $user);
                 } else {
